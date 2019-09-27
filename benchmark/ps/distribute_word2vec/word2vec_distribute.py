@@ -64,8 +64,8 @@ flags.DEFINE_integer("window_size", 5,
                      "of the target word.")
 
 flags.DEFINE_string("dict_path", 'thirdparty/test_build_dict', "dict path")
-flags.DEFINE_integer("save_steps", 500000,
-                     "The number of step to save (default: 500000)")
+flags.DEFINE_integer("save_steps", 30000000,
+                     "The number of step to save (default: 30000000)")
 flags.DEFINE_boolean("sync_mode", True, "sync_mode or async_mode")
 flags.DEFINE_boolean("is_local", True, "local or cluster")
 FLAGS = flags.FLAGS
@@ -170,7 +170,6 @@ def main(_):
                                                       saver=saver)
             hooks.append(saver_hook)
             train_op = optimizer.minimize(loss, global_step=global_step)
-            saver = tf.train.Saver(max_to_keep=None)
             sess_config = tf.ConfigProto(allow_soft_placement=True,
                                          log_device_placement=False)
             with tf.train.MonitoredTrainingSession(master=server.target,
